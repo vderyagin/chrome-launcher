@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+
+  "name": "Chrome Launcher",
+  "description": "This extension allows to run external commands on URLs.",
+  "version": "0.1",
+
+  "permissions": [
+    "contextMenus",
+    "nativeMessaging"
+  ],
+
+  "icons": {
+    "16": "mpv-icon-8bit-16x16.png"
+  },
+
+  "background": {
+    "scripts": ["script.js"],
+    "persistent": false
+  }
+}
