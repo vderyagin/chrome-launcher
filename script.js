@@ -2,39 +2,47 @@
 
 var port = chrome.runtime.connectNative('com.vderyagin.testapp');
 
-chrome.contextMenus.onClicked.addListener(function (info) {
-  var url;
+var menus = {
+  'mpv-link': {
+    props: {
+      title: 'play with mpv',
+      contexts: ['link'],
+      targetUrlPatterns: [
+        'https://*.youtube.com/watch*'
+      ],
+    },
+    urlKey: 'linkUrl'
+  },
+  'mpv-page': {
+    props: {
+      title: 'play with mpv',
+      contexts: ['page'],
+      documentUrlPatterns: [
+        'https://*.youtube.com/watch*'
+      ],
+    },
+    urlKey: 'pageUrl'
+  },
+};
 
-  switch (info.menuItemId) {
-  case 'mpv-link':
-    url = info.linkUrl;
-    break;
-  case 'mpv-page':
-    url = info.pageUrl;
-    break;
-  default:
+chrome.contextMenus.onClicked.addListener(function (info) {
+  var id = info.menuItemId;
+
+  if (menus.hasOwnProperty(id)) {
+    port.postMessage({url: info[menus[id].urlKey]});
+  } else {
     throw 'unknown context menu id';
   }
-
-  port.postMessage({url: url});
 });
 
 chrome.runtime.onInstalled.addListener(function () {
-  chrome.contextMenus.create({
-    id: 'mpv-link',
-    title: 'play with mpv',
-    contexts: ['link'],
-    targetUrlPatterns: [
-      'https://*.youtube.com/watch*'
-    ]
-  });
+  var props;
 
-  chrome.contextMenus.create({
-    id: 'mpv-page',
-    title: 'play with mpv',
-    contexts: ['page'],
-    documentUrlPatterns: [
-      'https://*.youtube.com/watch*'
-    ]
-  });
+  for (var id in menus) {
+    if (menus.hasOwnProperty(id)) {
+      props = menus[id].props;
+      props.id = id;
+      chrome.contextMenus.create(props);
+    }
+  }
 });
