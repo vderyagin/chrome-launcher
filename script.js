@@ -25,6 +25,16 @@ var menus = {
   },
 };
 
+var extend = function (base, obj) {
+  for (var property in obj) {
+    if (obj.hasOwnProperty(property)) {
+      base[property] = obj[property];
+    }
+  }
+
+  return base;
+};
+
 chrome.contextMenus.onClicked.addListener(function (info) {
   var id = info.menuItemId;
 
@@ -36,13 +46,9 @@ chrome.contextMenus.onClicked.addListener(function (info) {
 });
 
 chrome.runtime.onInstalled.addListener(function () {
-  var props;
-
   for (var id in menus) {
     if (menus.hasOwnProperty(id)) {
-      props = menus[id].props;
-      props.id = id;
-      chrome.contextMenus.create(props);
+      chrome.contextMenus.create(extend({id: id}, menus[id].props));
     }
   }
 });
