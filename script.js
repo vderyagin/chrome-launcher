@@ -26,11 +26,9 @@ var menus = {
 };
 
 var extend = function (base, obj) {
-  for (var property in obj) {
-    if (obj.hasOwnProperty(property)) {
-      base[property] = obj[property];
-    }
-  }
+  Object.keys(obj).forEach(function (key) {
+    base[key] = obj[key];
+  });
 
   return base;
 };
@@ -46,9 +44,7 @@ chrome.contextMenus.onClicked.addListener(function (info) {
 });
 
 chrome.runtime.onInstalled.addListener(function () {
-  for (var id in menus) {
-    if (menus.hasOwnProperty(id)) {
-      chrome.contextMenus.create(extend({id: id}, menus[id].props));
-    }
-  }
+  Object.keys(menus).forEach(function (id) {
+    chrome.contextMenus.create(extend({id: id}, menus[id].props));
+  });
 });
