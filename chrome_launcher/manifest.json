@@ -3,7 +3,7 @@
 
   "name": "Chrome Launcher",
   "description": "This extension allows to run external commands on URLs.",
-  "version": "0.1",
+  "version": "0.0.1",
 
   "permissions": [
     "contextMenus",

@@ -1,7 +1,7 @@
 require 'tmpdir'
 
-def extension_name
-  File.basename(__dir__)
+def extension_path
+  File.expand_path('chrome_launcher', __dir__)
 end
 
 def in_temporary_directory(&block)
@@ -22,16 +22,12 @@ def with_decrypted_file(file)
   end
 end
 
-desc 'pack extension'
-task :pack do
+desc 'pack extension into .crx chrome extension file'
+task :crx do
   with_decrypted_file('key.pem.gpg') do |key|
     sh 'chromium',
        '--no-message-box',
-       "--pack-extension=#{__dir__}",
+       "--pack-extension=#{extension_path}",
        "--pack-extension-key=#{key}"
   end
-
-  mv File.expand_path("#{extension_name}.crx", '..'), '.'
 end
-
-task default: :pack
