@@ -1,6 +1,6 @@
 /* global chrome */
 
-var port = chrome.runtime.connectNative('com.vderyagin.testapp');
+var port = chrome.runtime.connectNative('chrome_launcher');
 
 var menus = {
   'mpv-link': {
