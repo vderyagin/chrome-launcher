@@ -9,7 +9,7 @@ var menus = {
       contexts: ['link'],
       targetUrlPatterns: [
         'https://*.youtube.com/watch*'
-      ],
+      ]
     },
     urlKey: 'linkUrl'
   },
@@ -19,10 +19,10 @@ var menus = {
       contexts: ['page'],
       documentUrlPatterns: [
         'https://*.youtube.com/watch*'
-      ],
+      ]
     },
     urlKey: 'pageUrl'
-  },
+  }
 };
 
 var extend = function (base, obj) {
