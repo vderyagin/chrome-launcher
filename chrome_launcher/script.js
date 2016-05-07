@@ -5,22 +5,18 @@ var port = chrome.runtime.connectNative('chrome_launcher');
 var menus = {
   'mpv-link': {
     props: {
-      title: 'play with mpv',
-      contexts: ['link'],
-      targetUrlPatterns: [
-        'https://*.youtube.com/watch*'
-      ]
+      title: 'play URL with mpv',
+      contexts: ['link']
     },
+    urlType: 'youtube',
     urlKey: 'linkUrl'
   },
   'mpv-page': {
     props: {
-      title: 'play with mpv',
-      contexts: ['page'],
-      documentUrlPatterns: [
-        'https://*.youtube.com/watch*'
-      ]
+      title: 'play page with mpv',
+      contexts: ['page']
     },
+    urlType: 'youtube',
     urlKey: 'pageUrl'
   }
 };
